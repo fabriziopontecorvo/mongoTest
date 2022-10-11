@@ -15,12 +15,20 @@ repositories {
     mavenCentral()
 }
 
+val arrowVersion = "1.0.1"
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactive")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation ("io.arrow-kt:arrow-fx-coroutines:$arrowVersion")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
