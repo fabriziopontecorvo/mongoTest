@@ -1,5 +1,6 @@
 package com.example.mongotest.adapter.routesHandler
 
+import com.example.mongotest.application.port.`in`.CoffeeInputPort
 import com.example.mongotest.application.useCase.Starbucks
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,7 +11,7 @@ import org.springframework.web.reactive.function.server.router
 class Routes {
 
     @Bean
-    fun route(handler: Starbucks) = router {
+    fun route(handler: CoffeeInputPort) = router {
         (accept(APPLICATION_JSON) and "/coffees").nest {
             POST("", handler::createCoffee)
             GET("", handler::obtainCoffees)
@@ -18,7 +19,6 @@ class Routes {
             GET("/baristas/{barista}", handler::obtainCoffeesByBarista)
             GET("/clients/{client}", handler::obtainCoffeesByClient)
             DELETE("/{id}", handler::deleteById)
-
         }
     }
 
