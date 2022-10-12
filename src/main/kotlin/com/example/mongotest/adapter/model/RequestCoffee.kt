@@ -1,4 +1,4 @@
-package com.example.mongotest.adapter.rest
+package com.example.mongotest.adapter.model
 
 import com.example.mongotest.application.model.CoffeeDomain
 import java.util.*
@@ -11,7 +11,7 @@ data class RequestCoffee(
     fun toDomain() =
         CoffeeDomain(
             id = UUID.randomUUID().toString(),
-            type = type,
+            type = type.toString(),
             barista = barista,
             client = client,
         )

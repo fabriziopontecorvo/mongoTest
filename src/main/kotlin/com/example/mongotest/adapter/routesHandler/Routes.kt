@@ -1,33 +1,26 @@
 package com.example.mongotest.adapter.routesHandler
 
-import com.example.mongotest.adapter.rest.CoffeeAdapter
+import com.example.mongotest.application.useCase.Starbucks
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.router
-import org.springframework.http.MediaType.TEXT_HTML
-import org.springframework.web.reactive.function.server.RequestPredicates.accept
-import org.springframework.web.reactive.function.server.coRouter
 
-@Component
-class DslCoroutineRouter {
+@Configuration
+class Routes {
 
     @Bean
-    fun route(handler: CoffeeAdapter) = router {
+    fun route(handler: Starbucks) = router {
         (accept(APPLICATION_JSON) and "/coffees").nest {
-            POST { handler.createCoffee(it) }
-            GET { handler.obtainCoffees() }
-            GET("/type/{type}").invoke { handler.obtainCoffeesByType(it) }
-            GET("/barista/{barista}").invoke { handler.obtainCoffeesByBarista(it) }
-            DELETE("/{id}").invoke { handler.deleteById(it) }
+            POST("", handler::createCoffee)
+            GET("", handler::obtainCoffees)
+            GET("/types/{type}", handler::obtainCoffeesByType)
+            GET("/baristas/{barista}", handler::obtainCoffeesByBarista)
+            GET("/clients/{client}", handler::obtainCoffeesByClient)
+            DELETE("/{id}", handler::deleteById)
+
         }
     }
 
-    @Bean
-    fun coRoute(handler: CoffeeAdapter) = coRouter {
-        (accept(APPLICATION_JSON) and "/coffees").nest {
-            GET("/client/{client}").invoke { handler.obtainCoffeesByClient(it) }
-        }
-    }
 }
 

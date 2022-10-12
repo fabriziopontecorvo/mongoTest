@@ -39,6 +39,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
