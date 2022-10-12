@@ -5,6 +5,7 @@ import com.example.mongotest.application.useCase.Starbucks
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.web.reactive.function.server.coRouter
 import org.springframework.web.reactive.function.server.router
 
 @Configuration
@@ -19,6 +20,14 @@ class Routes {
             GET("/baristas/{barista}", handler::obtainCoffeesByBarista)
             GET("/clients/{client}", handler::obtainCoffeesByClient)
             DELETE("/{id}", handler::deleteById)
+        }
+    }
+
+
+    @Bean
+    fun coRoute(handler: CoffeeInputPort) = coRouter {
+        (accept(APPLICATION_JSON) and "/async-coffees").nest {
+            POST("", handler::asyncCreateCoffee)
         }
     }
 

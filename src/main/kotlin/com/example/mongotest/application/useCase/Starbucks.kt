@@ -3,6 +3,11 @@ package com.example.mongotest.application.useCase
 import com.example.mongotest.adapter.model.RequestCoffee
 import com.example.mongotest.application.model.CoffeeDomain
 import com.example.mongotest.application.port.`in`.CoffeeInputPort
+import com.example.mongotest.application.port.`in`.CoroutineMongo
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.singleOrNull
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findAll
@@ -12,15 +17,14 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.bodyToMono
+import org.springframework.web.reactive.function.server.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
 class Starbucks(
-    val template: ReactiveMongoTemplate
+    val template: ReactiveMongoTemplate,
+    val repo: CoroutineMongo
 ) : CoffeeInputPort {
 
     override fun createCoffee(serverRequest: ServerRequest): Mono<ServerResponse> =
@@ -32,6 +36,17 @@ class Starbucks(
                     template.save(it.toDomain())
                 }
         }
+
+    override suspend fun asyncCreateCoffee(serverRequest: ServerRequest): ServerResponse =
+        ServerResponse
+            .ok()
+            .bodyAndAwait(
+                serverRequest
+                    .bodyToFlow<RequestCoffee>()
+                    .map { it.toDomain() }
+                    .let { repo.saveAll(it) }
+            )
+
 
     override fun obtainCoffees(serverRequest: ServerRequest): Mono<ServerResponse> =
         response {
