@@ -1,4 +1,4 @@
-package com.example.mongotest.application.model
+package com.example.mongotest.domain
 
 import com.example.mongotest.adapter.model.TypeCoffee
 import org.springframework.data.annotation.Id

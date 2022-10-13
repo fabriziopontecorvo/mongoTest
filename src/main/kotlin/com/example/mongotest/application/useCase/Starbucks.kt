@@ -1,7 +1,7 @@
 package com.example.mongotest.application.useCase
 
 import com.example.mongotest.adapter.model.RequestCoffee
-import com.example.mongotest.application.model.CoffeeDomain
+import com.example.mongotest.domain.CoffeeDomain
 import com.example.mongotest.application.port.`in`.CoffeeInputPort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.find

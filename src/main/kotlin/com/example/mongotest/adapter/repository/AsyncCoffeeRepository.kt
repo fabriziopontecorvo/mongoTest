@@ -1,6 +1,6 @@
 package com.example.mongotest.adapter.repository
 
-import com.example.mongotest.application.model.CoffeeDomain
+import com.example.mongotest.domain.CoffeeDomain
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 

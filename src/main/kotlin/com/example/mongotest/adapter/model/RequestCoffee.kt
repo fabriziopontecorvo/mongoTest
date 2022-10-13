@@ -1,6 +1,6 @@
 package com.example.mongotest.adapter.model
 
-import com.example.mongotest.application.model.CoffeeDomain
+import com.example.mongotest.domain.CoffeeDomain
 import java.util.*
 
 data class RequestCoffee(

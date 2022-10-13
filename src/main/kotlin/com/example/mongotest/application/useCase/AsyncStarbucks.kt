@@ -1,29 +1,14 @@
 package com.example.mongotest.application.useCase
 
-import arrow.core.Either
 import arrow.core.computations.either
 import com.example.mongotest.adapter.model.RequestCoffee
 import com.example.mongotest.adapter.repository.AsyncCoffeeRepository
-import com.example.mongotest.application.model.CoffeeDomain
+import com.example.mongotest.domain.CoffeeDomain
 import com.example.mongotest.application.port.`in`.AsyncCoffeeInputPort
-import com.example.mongotest.application.port.`in`.CoffeeInputPort
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate
-import org.springframework.data.mongodb.core.find
-import org.springframework.data.mongodb.core.findAll
-import org.springframework.data.mongodb.core.findAndRemove
-import org.springframework.data.mongodb.core.query.Criteria
-import org.springframework.data.mongodb.core.query.Query
-import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.server.*
-import org.w3c.dom.Text
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
-import java.awt.TextField
 
 @Service
 class AsyncStarbucks(
